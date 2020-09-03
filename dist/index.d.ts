@@ -1,7 +1,11 @@
 import type { InlineTool, InlineToolConstructorOptions } from '@editorjs/editorjs';
 declare class EditorJSStyle implements InlineTool {
     static get isInline(): boolean;
-    static get sanitize(): {};
+    static get sanitize(): {
+        span: {
+            class: string;
+        };
+    };
     static get title(): string;
     private api;
     constructor({ api }: InlineToolConstructorOptions);
