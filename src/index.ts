@@ -11,9 +11,7 @@ class EditorJSStyle implements InlineTool {
 
   static get sanitize() {
     return {
-      span: {
-        class: 'editorjs-inline',
-      },
+      span: true,
     };
   }
 
@@ -21,23 +19,70 @@ class EditorJSStyle implements InlineTool {
     return 'Style';
   }
 
+  private actions: HTMLDivElement;
   private api: API;
+  private button: HTMLButtonElement;
 
   constructor({ api }: InlineToolConstructorOptions) {
+    this.actions = document.createElement('div');
     this.api = api;
+    this.button = this.createButton();
   }
 
   get shortcut() {
     return 'CMD+S';
   }
 
-  surround(range: Range) {}
-
   checkState() {
-    return false;
+    const span = this.api.selection.findParentTag('SPAN', 'editorjs-style');
+
+    this.button.classList.toggle(
+      this.api.styles.inlineToolButtonActive,
+      Boolean(span)
+    );
+    this.actions.innerHTML = '';
+
+    if (span) {
+      this.actions.appendChild(document.createTextNode('Style'));
+
+      const input = document.createElement('input');
+
+      input.classList.add(this.api.styles.input);
+      input.value = span.getAttribute('style') ?? '';
+
+      input.addEventListener('input', () =>
+        span.setAttribute('style', input.value)
+      );
+
+      this.actions.appendChild(input);
+    }
+
+    return Boolean(span);
+  }
+
+  clear() {
+    this.actions.innerHTML = '';
   }
 
   render() {
+    return this.button;
+  }
+
+  renderActions(): HTMLElement {
+    return this.actions;
+  }
+
+  surround(range: Range) {
+    const span = document.createElement('span');
+
+    span.classList.add('editorjs-style');
+    span.appendChild(range.extractContents());
+
+    range.insertNode(span);
+    this.api.selection.expandToTag(span);
+  }
+
+  private createButton() {
     const button = document.createElement('button');
 
     button.classList.add(this.api.styles.inlineToolButton);

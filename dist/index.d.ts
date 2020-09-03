@@ -2,16 +2,19 @@ import type { InlineTool, InlineToolConstructorOptions } from '@editorjs/editorj
 declare class EditorJSStyle implements InlineTool {
     static get isInline(): boolean;
     static get sanitize(): {
-        span: {
-            class: string;
-        };
+        span: boolean;
     };
     static get title(): string;
+    private actions;
     private api;
+    private button;
     constructor({ api }: InlineToolConstructorOptions);
     get shortcut(): string;
-    surround(range: Range): void;
     checkState(): boolean;
+    clear(): void;
     render(): HTMLButtonElement;
+    renderActions(): HTMLElement;
+    surround(range: Range): void;
+    private createButton;
 }
 export default EditorJSStyle;

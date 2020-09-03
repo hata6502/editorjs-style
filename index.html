@@ -13,12 +13,13 @@
     <div id="output-data"></div>
     <script>
       const data = {
-        time: 1598789264099,
+        time: 1599146326740,
         blocks: [
           {
             type: 'paragraph',
             data: {
-              text: 'editorjs-style test',
+              text:
+                'editorjs-<span class="editorjs-style" style="background-color: pink;">style</span> test',
             },
           },
         ],
@@ -28,7 +29,7 @@
       const editorJS = new EditorJS({
         data,
         tools: {
-          EditorJSStyle,
+          editorJSStyle: EditorJSStyle,
         },
       });
 

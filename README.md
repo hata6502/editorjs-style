@@ -1,3 +1,5 @@
+Work in progress
+
 # editorjs-style
 
 Inline-style Tool for Editor.js
