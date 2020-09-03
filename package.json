@@ -1,0 +1,33 @@
+{
+  "name": "editorjs-style",
+  "version": "0.0.0",
+  "description": "Inline-style Tool for Editor.js",
+  "keywords": [
+    "codex",
+    "editor",
+    "style",
+    "tool",
+    "editor.js",
+    "editorjs"
+  ],
+  "repository": "https://github.com/hata6502/editorjs-style",
+  "license": "MIT",
+  "author": "hata6502",
+  "main": "dist/index.js",
+  "scripts": {
+    "fix": "prettier --write .",
+    "generate-disclaimer": "yarn licenses generate-disclaimer --ignore-platform > DISCLAIMER.md",
+    "license-checker": "license-checker --excludePackages 'css-select@1.2.0;dictionary-en@3.0.0;domutils@1.5.1;optimist@0.6.1;tiny-segmenter@0.2.0;trim@0.0.1;union@0.5.0;unorm@1.6.0;zlibjs@0.2.0' --excludePrivatePackages --onlyAllow 'Apache-2.0;BSD;BSD-2-Clause;BSD-3-Clause;CC0-1.0;CC-BY-3.0;CC-BY-4.0;ISC;MIT;Public Domain;Unlicense;WTFPL' --production --unknown > /dev/null",
+    "test": "tsc --noEmit",
+    "webpack": "webpack"
+  },
+  "devDependencies": {
+    "@editorjs/editorjs": "^2.18.0",
+    "license-checker": "^25.0.1",
+    "prettier": "^2.0.5",
+    "ts-loader": "^8.0.3",
+    "typescript": "^4.0.2",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  }
+}
