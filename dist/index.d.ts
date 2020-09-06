@@ -5,6 +5,7 @@ declare class EditorJSStyle implements InlineTool {
         span: boolean;
     };
     static get title(): string;
+    private static initializeSpan;
     private actions;
     private api;
     private button;

@@ -19,6 +19,32 @@ class EditorJSStyle implements InlineTool {
     return 'Style';
   }
 
+  private static initializeSpan({ span }: { span: HTMLSpanElement }) {
+    span.classList.add('editorjs-style');
+
+    const mutationObserver = new MutationObserver(() => {
+      if (
+        span.firstChild?.nodeName !== '#text' ||
+        span.firstChild?.textContent?.slice(0, 1) !== '\u200b'
+      ) {
+        span.prepend(document.createTextNode('\u200b'));
+      }
+
+      if (
+        span.lastChild?.nodeName !== '#text' ||
+        span.lastChild?.textContent?.slice(-1) !== '\u200b'
+      ) {
+        span.append(document.createTextNode('\u200b'));
+      }
+    });
+
+    mutationObserver.observe(span, {
+      characterData: true,
+      childList: true,
+      subtree: true,
+    });
+  }
+
   private actions: HTMLDivElement;
   private api: API;
   private button: HTMLButtonElement;
@@ -65,6 +91,34 @@ class EditorJSStyle implements InlineTool {
   }
 
   render() {
+    setTimeout(() => {
+      const codexEditor = this.button.closest('.codex-editor');
+
+      if (!codexEditor) {
+        throw new Error(
+          "Couldn't find the parent Editor.js of editorjs-style. "
+        );
+      }
+
+      const mutationObserver = new MutationObserver(() => {
+        if (codexEditor.querySelector('.codex-editor__loader')) {
+          return;
+        }
+
+        codexEditor
+          .querySelectorAll('span.editorjs-style')
+          .forEach((element) => {
+            EditorJSStyle.initializeSpan({ span: element as HTMLSpanElement });
+
+            element.appendChild(document.createTextNode(''));
+          });
+
+        mutationObserver.disconnect();
+      });
+
+      mutationObserver.observe(codexEditor, { childList: true });
+    });
+
     return this.button;
   }
 
@@ -75,11 +129,9 @@ class EditorJSStyle implements InlineTool {
   surround(range: Range) {
     const span = document.createElement('span');
 
-    span.classList.add('editorjs-style');
+    EditorJSStyle.initializeSpan({ span });
 
     span.append(range.extractContents());
-    span.append(document.createTextNode('\u200b'));
-    span.prepend(document.createTextNode('\u200b'));
 
     range.insertNode(span);
     this.api.selection.expandToTag(span);
