@@ -43,7 +43,7 @@ class EditorJSStyle implements InlineTool {
     this.actions.innerHTML = '';
 
     if (span) {
-      this.actions.appendChild(document.createTextNode('Style'));
+      this.actions.append(document.createTextNode('Style'));
 
       const input = document.createElement('input');
 
@@ -54,7 +54,7 @@ class EditorJSStyle implements InlineTool {
         span.setAttribute('style', input.value)
       );
 
-      this.actions.appendChild(input);
+      this.actions.append(input);
     }
 
     return Boolean(span);
@@ -76,7 +76,10 @@ class EditorJSStyle implements InlineTool {
     const span = document.createElement('span');
 
     span.classList.add('editorjs-style');
-    span.appendChild(range.extractContents());
+
+    span.append(range.extractContents());
+    span.append(document.createTextNode('\u200b'));
+    span.prepend(document.createTextNode('\u200b'));
 
     range.insertNode(span);
     this.api.selection.expandToTag(span);
