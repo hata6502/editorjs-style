@@ -67,27 +67,55 @@ class EditorJSStyle implements InlineTool {
     }
 
     this.actions.innerHTML = `
-      <div style="display: flex; align-items: center; justify-content: space-between; ">
-        <div>Style settings</div>
+      <div style="margin-left: 0.5rem; ">
+        <div style="display: flex; align-items: center; justify-content: space-between; ">
+          <div>Style settings</div>
 
-        <button class="delete-button ${this.api.styles.settingsButton}" type="button">
-          <svg class="icon" height="24" viewBox="0 0 24 24" width="24">
-            <path d="M0 0h24v24H0z" fill="none"/>
-            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-          </svg>
-        </button>
+          <button class="delete-button ${this.api.styles.settingsButton}" type="button">
+            <svg class="icon" height="24" viewBox="0 0 24 24" width="24">
+              <path d="M0 0h24v24H0z" fill="none"/>
+              <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+            </svg>
+          </button>
+        </div>
+
+        <div style="display: flex; align-items: center; justify-content: space-between; ">
+          <div>ID</div>
+
+          <input class="id-input ${this.api.styles.input}" placeholder="exciting" style="width: 80%; ">
+        </div>
+
+        <div style="display: flex; align-items: center; justify-content: space-between; ">
+          <div>Class</div>
+
+          <input class="class-input ${this.api.styles.input}" placeholder="note editorial" style="width: 80%; ">
+        </div>
+
+        <div style="display: flex; align-items: center; justify-content: space-between; ">
+          <div>Style</div>
+
+          <input class="style-input ${this.api.styles.input}" placeholder="background: #ffe7e8; " style="width: 80%; ">
+        </div>
       </div>
-      <input class="style-input ${this.api.styles.input}">
     `;
 
     const deleteButton = this.actions.querySelector(
       '.delete-button'
     ) as HTMLButtonElement | null;
+
+    const classInput = this.actions.querySelector(
+      '.class-input'
+    ) as HTMLInputElement | null;
+
+    const idInput = this.actions.querySelector(
+      '.id-input'
+    ) as HTMLInputElement | null;
+
     const styleInput = this.actions.querySelector(
       '.style-input'
     ) as HTMLInputElement | null;
 
-    if (!deleteButton || !styleInput) {
+    if (!deleteButton || !classInput || !idInput || !styleInput) {
       throw new Error("Couldn't render actions for editorjs-style. ");
     }
 
@@ -122,6 +150,17 @@ class EditorJSStyle implements InlineTool {
     this.api.tooltip.onHover(deleteButton, 'Delete style', {
       placement: 'top',
     });
+
+    classInput.value = Array.from(span.classList)
+      .filter((className) => className !== 'editorjs-style')
+      .join(' ');
+
+    classInput.addEventListener('input', () =>
+      span.setAttribute('class', `editorjs-style ${classInput.value}`)
+    );
+
+    idInput.value = span.id;
+    idInput.addEventListener('input', () => (span.id = idInput.value));
 
     styleInput.value = span.getAttribute('style') ?? '';
 
