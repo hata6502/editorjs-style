@@ -58,80 +58,78 @@ class EditorJSStyle implements InlineTool {
   }
 
   checkState() {
-    const span = this.api.selection.findParentTag('SPAN', 'editorjs-style');
-
     this.actions.innerHTML = '';
 
-    if (span) {
-      this.actions.innerHTML = `
-        <div style="display: flex; align-items: center; justify-content: space-between; ">
-          <div>Style settings</div>
+    const span = this.api.selection.findParentTag('SPAN', 'editorjs-style');
 
-          <button class="delete-button ${this.api.styles.settingsButton}" type="button">
-            <svg class="icon" height="24" viewBox="0 0 24 24" width="24">
-              <path d="M0 0h24v24H0z" fill="none"/>
-              <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-            </svg>
-          </button>
-        </div>
-        <input class="style-input ${this.api.styles.input}">
-      `;
-
-      const deleteButton = this.actions.querySelector(
-        '.delete-button'
-      ) as HTMLButtonElement | null;
-      const styleInput = this.actions.querySelector(
-        '.style-input'
-      ) as HTMLInputElement | null;
-
-      if (!deleteButton || !styleInput) {
-        throw new Error("Couldn't render actions for editorjs-style. ");
-      }
-
-      deleteButton.addEventListener('click', () => {
-        const clonedNodes = Array.from(span.childNodes).map((node) =>
-          node.cloneNode(true)
-        );
-
-        clonedNodes.forEach((node) =>
-          span.parentNode?.insertBefore(node, span)
-        );
-        span.remove();
-
-        if (clonedNodes.length === 0) {
-          return;
-        }
-
-        const selection = window.getSelection();
-
-        if (!selection) {
-          throw new Error(
-            "Couldn't select unwrapped editorjs-style contents. "
-          );
-        }
-
-        selection.removeAllRanges();
-
-        const range = new Range();
-
-        range.setStartBefore(clonedNodes[0]);
-        range.setEndAfter(clonedNodes[clonedNodes.length - 1]);
-
-        selection.addRange(range);
-      });
-
-      this.api.tooltip.onHover(deleteButton, 'Delete style', {
-        placement: 'top',
-      });
-
-      styleInput.value = span.getAttribute('style') ?? '';
-
-      styleInput.addEventListener('input', () =>
-        span.setAttribute('style', styleInput.value)
-      );
+    if (!span) {
+      return false;
     }
 
-    return Boolean(span);
+    this.actions.innerHTML = `
+      <div style="display: flex; align-items: center; justify-content: space-between; ">
+        <div>Style settings</div>
+
+        <button class="delete-button ${this.api.styles.settingsButton}" type="button">
+          <svg class="icon" height="24" viewBox="0 0 24 24" width="24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+          </svg>
+        </button>
+      </div>
+      <input class="style-input ${this.api.styles.input}">
+    `;
+
+    const deleteButton = this.actions.querySelector(
+      '.delete-button'
+    ) as HTMLButtonElement | null;
+    const styleInput = this.actions.querySelector(
+      '.style-input'
+    ) as HTMLInputElement | null;
+
+    if (!deleteButton || !styleInput) {
+      throw new Error("Couldn't render actions for editorjs-style. ");
+    }
+
+    deleteButton.addEventListener('click', () => {
+      const clonedNodes = Array.from(span.childNodes).map((node) =>
+        node.cloneNode(true)
+      );
+
+      clonedNodes.forEach((node) => span.parentNode?.insertBefore(node, span));
+      span.remove();
+
+      if (clonedNodes.length === 0) {
+        return;
+      }
+
+      const selection = window.getSelection();
+
+      if (!selection) {
+        throw new Error("Couldn't select unwrapped editorjs-style contents. ");
+      }
+
+      selection.removeAllRanges();
+
+      const range = new Range();
+
+      range.setStartBefore(clonedNodes[0]);
+      range.setEndAfter(clonedNodes[clonedNodes.length - 1]);
+
+      selection.addRange(range);
+    });
+
+    this.api.tooltip.onHover(deleteButton, 'Delete style', {
+      placement: 'top',
+    });
+
+    styleInput.value = span.getAttribute('style') ?? '';
+
+    styleInput.addEventListener('input', () =>
+      span.setAttribute('style', styleInput.value)
+    );
+
+    return true;
   }
 
   clear() {
