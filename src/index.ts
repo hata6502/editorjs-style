@@ -79,23 +79,27 @@ class EditorJSStyle implements InlineTool {
           </button>
         </div>
 
-        <div style="display: flex; align-items: center; justify-content: space-between; ">
-          <div>ID</div>
+        <label style="display: flex; align-items: center; justify-content: space-between; ">
+          <span>ID</span>
 
           <input class="id-input ${this.api.styles.input}" placeholder="exciting" style="width: 80%; ">
-        </div>
+        </label>
 
-        <div style="display: flex; align-items: center; justify-content: space-between; ">
-          <div>Class</div>
+        <label style="display: flex; align-items: center; justify-content: space-between; ">
+          <span>Class</span>
 
           <input class="class-input ${this.api.styles.input}" placeholder="note editorial" style="width: 80%; ">
-        </div>
+        </label>
 
-        <div style="display: flex; align-items: center; justify-content: space-between; ">
-          <div>Style</div>
+        <label style="display: flex; align-items: center; justify-content: space-between; ">
+          <span>Style</span>
 
-          <input class="style-input ${this.api.styles.input}" placeholder="background: #ffe7e8; " style="width: 80%; ">
-        </div>
+          <textarea
+            class="style-textarea ${this.api.styles.input}"
+            placeholder="background: #ffe7e8;"
+            style="resize: none; width: 80%; ">
+          </textarea>
+        </label>
       </div>
     `;
 
@@ -111,11 +115,11 @@ class EditorJSStyle implements InlineTool {
       '.id-input'
     ) as HTMLInputElement | null;
 
-    const styleInput = this.actions.querySelector(
-      '.style-input'
-    ) as HTMLInputElement | null;
+    const styleTextarea = this.actions.querySelector(
+      '.style-textarea'
+    ) as HTMLTextAreaElement | null;
 
-    if (!deleteButton || !classInput || !idInput || !styleInput) {
+    if (!deleteButton || !classInput || !idInput || !styleTextarea) {
       throw new Error("Couldn't render actions for editorjs-style. ");
     }
 
@@ -160,12 +164,17 @@ class EditorJSStyle implements InlineTool {
     );
 
     idInput.value = span.id;
+
     idInput.addEventListener('input', () => (span.id = idInput.value));
 
-    styleInput.value = span.getAttribute('style') ?? '';
+    styleTextarea.value = span.getAttribute('style') ?? '';
 
-    styleInput.addEventListener('input', () =>
-      span.setAttribute('style', styleInput.value)
+    styleTextarea.addEventListener('keydown', (event) =>
+      event.stopPropagation()
+    );
+
+    styleTextarea.addEventListener('input', () =>
+      span.setAttribute('style', styleTextarea.value)
     );
 
     return true;
