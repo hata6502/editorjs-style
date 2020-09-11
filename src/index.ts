@@ -22,6 +22,9 @@ class EditorJSStyle implements InlineTool {
   private static initializeSpan({ span }: { span: HTMLSpanElement }) {
     span.classList.add('editorjs-style');
 
+    // To prevent Editor.js keydown event
+    span.addEventListener('keydown', (event) => event.stopPropagation());
+
     const mutationObserver = new MutationObserver(() => {
       if (
         span.firstChild?.nodeName !== '#text' ||
