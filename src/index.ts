@@ -27,14 +27,14 @@ class EditorJSStyle implements InlineTool {
         span.firstChild?.nodeName !== '#text' ||
         span.firstChild?.textContent?.slice(0, 1) !== '\u200b'
       ) {
-        span.prepend(document.createTextNode('\u200b'));
+        span.prepend('\u200b');
       }
 
       if (
         span.lastChild?.nodeName !== '#text' ||
         span.lastChild?.textContent?.slice(-1) !== '\u200b'
       ) {
-        span.append(document.createTextNode('\u200b'));
+        span.append('\u200b');
       }
     });
 
@@ -169,6 +169,7 @@ class EditorJSStyle implements InlineTool {
 
     styleTextarea.value = span.getAttribute('style') ?? '';
 
+    // To input line breaks
     styleTextarea.addEventListener('keydown', (event) =>
       event.stopPropagation()
     );
@@ -216,7 +217,8 @@ class EditorJSStyle implements InlineTool {
           .forEach((element) => {
             EditorJSStyle.initializeSpan({ span: element as HTMLSpanElement });
 
-            element.appendChild(document.createTextNode(''));
+            // To dispatch mutation observer
+            element.append('');
           });
 
         mutationObserver.disconnect();
@@ -237,10 +239,12 @@ class EditorJSStyle implements InlineTool {
 
     EditorJSStyle.initializeSpan({ span });
 
-    span.append(range.extractContents());
+    span.append(range.collapsed ? 'new style' : range.extractContents());
 
-    range.insertNode(span);
-    this.api.selection.expandToTag(span);
+    setTimeout(() => {
+      range.insertNode(span);
+      this.api.selection.expandToTag(span);
+    });
   }
 }
 
