@@ -30,8 +30,34 @@ By attaching any id, class and style to inline elements, it can be used like a H
 
 ## Install
 
+### Install via yarn
+
 ```sh
 yarn add editorjs-style
+```
+
+### Load from CDN
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/editorjs-style@latest"></script>
+```
+
+## Usage
+
+Please see [Demo HTML](https://github.com/hata6502/editorjs-style/blob/master/docs/index.html).
+
+## Config params
+
+This tool has no config params.
+
+## Output data
+
+Please see [Demo](https://hata6502.github.io/editorjs-style/).
+
+## Build
+
+```sh
+yarn webpack
 ```
 
 ## Run tests
