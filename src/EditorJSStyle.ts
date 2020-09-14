@@ -12,7 +12,11 @@ class EditorJSStyle implements InlineTool {
 
   static get sanitize() {
     return {
-      'editorjs-style': true,
+      'editorjs-style': {
+        class: true,
+        id: true,
+        style: true,
+      },
     };
   }
 
