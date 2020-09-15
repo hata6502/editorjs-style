@@ -24,12 +24,12 @@ class EditorJSStyle implements InlineTool {
     return 'Style';
   }
 
-  private actions: HTMLDivElement;
-  private api: API;
+  #actions: HTMLDivElement;
+  #api: API;
 
   constructor({ api }: InlineToolConstructorOptions) {
-    this.actions = document.createElement('div');
-    this.api = api;
+    this.#actions = document.createElement('div');
+    this.#api = api;
 
     if (customElements.get('editorjs-style')) {
       return;
@@ -43,20 +43,20 @@ class EditorJSStyle implements InlineTool {
   }
 
   checkState() {
-    this.actions.innerHTML = '';
+    this.#actions.innerHTML = '';
 
-    const editorjsStyle = this.api.selection.findParentTag('EDITORJS-STYLE');
+    const editorjsStyle = this.#api.selection.findParentTag('EDITORJS-STYLE');
 
     if (!editorjsStyle) {
       return false;
     }
 
-    this.actions.innerHTML = `
+    this.#actions.innerHTML = `
       <div style="margin-left: 0.5rem; ">
         <div style="display: flex; align-items: center; justify-content: space-between; ">
           <div>Style settings</div>
 
-          <button class="delete-button ${this.api.styles.settingsButton}" type="button">
+          <button class="delete-button ${this.#api.styles.settingsButton}" type="button">
             <svg class="icon" height="24" viewBox="0 0 24 24" width="24">
               <path d="M0 0h24v24H0z" fill="none"/>
               <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
@@ -67,20 +67,20 @@ class EditorJSStyle implements InlineTool {
         <label style="display: flex; align-items: center; justify-content: space-between; ">
           <span>ID</span>
 
-          <input class="id-input ${this.api.styles.input}" placeholder="exciting" style="width: 80%; ">
+          <input class="id-input ${this.#api.styles.input}" placeholder="exciting" style="width: 80%; ">
         </label>
 
         <label style="display: flex; align-items: center; justify-content: space-between; ">
           <span>Class</span>
 
-          <input class="class-input ${this.api.styles.input}" placeholder="note editorial" style="width: 80%; ">
+          <input class="class-input ${this.#api.styles.input}" placeholder="note editorial" style="width: 80%; ">
         </label>
 
         <label style="display: flex; align-items: center; justify-content: space-between; ">
           <span>Style</span>
 
           <textarea
-            class="style-textarea ${this.api.styles.input}"
+            class="style-textarea ${this.#api.styles.input}"
             placeholder="background: #ffe7e8;"
             style="resize: none; width: 80%; ">
           </textarea>
@@ -88,19 +88,19 @@ class EditorJSStyle implements InlineTool {
       </div>
     `;
 
-    const deleteButton = this.actions.querySelector(
+    const deleteButton = this.#actions.querySelector(
       '.delete-button'
     ) as HTMLButtonElement | null;
 
-    const classInput = this.actions.querySelector(
+    const classInput = this.#actions.querySelector(
       '.class-input'
     ) as HTMLInputElement | null;
 
-    const idInput = this.actions.querySelector(
+    const idInput = this.#actions.querySelector(
       '.id-input'
     ) as HTMLInputElement | null;
 
-    const styleTextarea = this.actions.querySelector(
+    const styleTextarea = this.#actions.querySelector(
       '.style-textarea'
     ) as HTMLTextAreaElement | null;
 
@@ -138,7 +138,7 @@ class EditorJSStyle implements InlineTool {
       selection.addRange(range);
     });
 
-    this.api.tooltip.onHover(deleteButton, 'Delete style', {
+    this.#api.tooltip.onHover(deleteButton, 'Delete style', {
       placement: 'top',
     });
 
@@ -167,13 +167,13 @@ class EditorJSStyle implements InlineTool {
   }
 
   clear() {
-    this.actions.innerHTML = '';
+    this.#actions.innerHTML = '';
   }
 
   render() {
     const button = document.createElement('button');
 
-    button.classList.add(this.api.styles.inlineToolButton);
+    button.classList.add(this.#api.styles.inlineToolButton);
     button.type = 'button';
 
     button.innerHTML = `
@@ -187,7 +187,7 @@ class EditorJSStyle implements InlineTool {
   }
 
   renderActions(): HTMLElement {
-    return this.actions;
+    return this.#actions;
   }
 
   surround(range: Range) {
@@ -199,7 +199,7 @@ class EditorJSStyle implements InlineTool {
 
     setTimeout(() => {
       range.insertNode(editorjsStyle);
-      this.api.selection.expandToTag(editorjsStyle);
+      this.#api.selection.expandToTag(editorjsStyle);
     });
   }
 }
