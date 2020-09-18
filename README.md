@@ -28,6 +28,8 @@ By attaching any id, class and style to inline elements, it can be used like a H
 
 ### ✨ [Demo](https://hata6502.github.io/editorjs-style/)
 
+![Demo](https://user-images.githubusercontent.com/7702653/93618038-bd90e880-fa11-11ea-9355-f782a557b6d4.gif)
+
 ## Install
 
 ### Install via yarn

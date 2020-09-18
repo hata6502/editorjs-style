@@ -56,7 +56,9 @@ class EditorJSStyle implements InlineTool {
         <div style="display: flex; align-items: center; justify-content: space-between; ">
           <div>Style settings</div>
 
-          <button class="delete-button ${this.#api.styles.settingsButton}" type="button">
+          <button class="delete-button ${
+            this.#api.styles.settingsButton
+          }" type="button">
             <svg class="icon" height="24" viewBox="0 0 24 24" width="24">
               <path d="M0 0h24v24H0z" fill="none"/>
               <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
@@ -67,13 +69,17 @@ class EditorJSStyle implements InlineTool {
         <label style="display: flex; align-items: center; justify-content: space-between; ">
           <span>ID</span>
 
-          <input class="id-input ${this.#api.styles.input}" placeholder="exciting" style="width: 80%; ">
+          <input class="id-input ${
+            this.#api.styles.input
+          }" placeholder="exciting" style="width: 80%; ">
         </label>
 
         <label style="display: flex; align-items: center; justify-content: space-between; ">
           <span>Class</span>
 
-          <input class="class-input ${this.#api.styles.input}" placeholder="note editorial" style="width: 80%; ">
+          <input class="class-input ${
+            this.#api.styles.input
+          }" placeholder="note editorial" style="width: 80%; ">
         </label>
 
         <label style="display: flex; align-items: center; justify-content: space-between; ">
