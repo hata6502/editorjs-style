@@ -4,12 +4,13 @@
     <meta charset="utf-8" />
     <title>editorjs-style</title>
     <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/paragraph@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/editorjs-inspector@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/editorjs-style@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/paragraph@latest"></script>
   </head>
 
   <body>
-    <div id="editorjs"></div>
+    <div id="editorjs" style="margin-top: 300px; "></div>
     <button id="button" type="button">Save</button>
     <div id="output-data"></div>
     <script>
@@ -37,6 +38,7 @@
       const editorJS = new EditorJS({
         data,
         tools: {
+          editorJSInspector: EditorJSInspector,
           editorJSStyle: EditorJSStyle,
           paragraph: {
             class: ParagraphForEditorJSStyle,

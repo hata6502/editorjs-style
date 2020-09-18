@@ -24,7 +24,10 @@ Work in progress
 ## 💡 Motivation
 
 Editor.js may need many inline tools to styling inline elements.
-By attaching any id, class and style to inline elements, it can be used like a HTML editor.
+editorjs-style provides feature attaching any id, class and style to inline elements.
+
+By using with [editorjs-inspector](https://github.com/hata6502/editorjs-inspector),
+Editor.js can be used like a HTML editor.
 
 ### ✨ [Demo](https://hata6502.github.io/editorjs-style/)
 
