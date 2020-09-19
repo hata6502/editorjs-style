@@ -4,6 +4,7 @@ import type {
   InlineToolConstructorOptions,
 } from '@editorjs/editorjs';
 import EditorJSStyleElement from './EditorJSStyleElement';
+import EditorJSStyleError from './EditorJSStyleError';
 
 class EditorJSStyle implements InlineTool {
   static get isInline() {
@@ -111,7 +112,7 @@ class EditorJSStyle implements InlineTool {
     ) as HTMLTextAreaElement | null;
 
     if (!deleteButton || !classInput || !idInput || !styleTextarea) {
-      throw new Error("Couldn't render actions for editorjs-style. ");
+      throw new EditorJSStyleError();
     }
 
     deleteButton.addEventListener('click', () => {
@@ -131,7 +132,7 @@ class EditorJSStyle implements InlineTool {
       const selection = window.getSelection();
 
       if (!selection) {
-        throw new Error("Couldn't select unwrapped editorjs-style contents. ");
+        throw new EditorJSStyleError();
       }
 
       selection.removeAllRanges();
