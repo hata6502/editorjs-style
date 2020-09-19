@@ -1,5 +1,3 @@
-Work in progress
-
 <h1 align="center">Welcome to editorjs-style 👋</h1>
 <p>
   <a href="https://www.npmjs.com/package/editorjs-style" target="_blank">
