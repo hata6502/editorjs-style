@@ -10,4 +10,4 @@ class EditorJSStyleError extends Error {
   }
 }
 
-export default EditorJSStyleError;
+export { EditorJSStyleError };

@@ -3,10 +3,10 @@ import type {
   InlineTool,
   InlineToolConstructorOptions,
 } from '@editorjs/editorjs';
-import EditorJSStyleElement from './EditorJSStyleElement';
-import EditorJSStyleError from './EditorJSStyleError';
+import { EditorJSStyleElement } from './EditorJSStyleElement';
+import { EditorJSStyleError } from './EditorJSStyleError';
 
-class EditorJSStyle implements InlineTool {
+class StyleInlineTool implements InlineTool {
   static get isInline() {
     return true;
   }
@@ -25,18 +25,20 @@ class EditorJSStyle implements InlineTool {
     return 'Style';
   }
 
+  static prepare() {
+    if (customElements.get('editorjs-style')) {
+      return;
+    }
+
+    customElements.define('editorjs-style', EditorJSStyleElement);
+  }
+
   #actions: HTMLDivElement;
   #api: API;
 
   constructor({ api }: InlineToolConstructorOptions) {
     this.#actions = document.createElement('div');
     this.#api = api;
-
-    if (customElements.get('editorjs-style')) {
-      return;
-    }
-
-    customElements.define('editorjs-style', EditorJSStyleElement);
   }
 
   get shortcut() {
@@ -46,14 +48,16 @@ class EditorJSStyle implements InlineTool {
   checkState() {
     this.#actions.innerHTML = '';
 
-    const editorjsStyle = this.#api.selection.findParentTag('EDITORJS-STYLE');
+    const editorJSStyleElement = this.#api.selection.findParentTag(
+      'EDITORJS-STYLE'
+    );
 
-    if (!editorjsStyle) {
+    if (!editorJSStyleElement) {
       return false;
     }
 
     this.#actions.innerHTML = `
-      <div style="margin-left: 0.5rem; ">
+      <div style="margin-bottom: 16px; margin-left: 16px; margin-right: 16px; ">
         <div style="display: flex; align-items: center; justify-content: space-between; ">
           <div>Style settings</div>
 
@@ -72,7 +76,7 @@ class EditorJSStyle implements InlineTool {
 
           <input class="id-input ${
             this.#api.styles.input
-          }" placeholder="exciting" style="width: 80%; ">
+          }" style="width: 80%; ">
         </label>
 
         <label style="display: flex; align-items: center; justify-content: space-between; ">
@@ -80,7 +84,7 @@ class EditorJSStyle implements InlineTool {
 
           <input class="class-input ${
             this.#api.styles.input
-          }" placeholder="note editorial" style="width: 80%; ">
+          }" style="width: 80%; ">
         </label>
 
         <label style="display: flex; align-items: center; justify-content: space-between; ">
@@ -116,14 +120,18 @@ class EditorJSStyle implements InlineTool {
     }
 
     deleteButton.addEventListener('click', () => {
-      const clonedNodes = Array.from(editorjsStyle.childNodes).map((node) =>
-        node.cloneNode(true)
-      );
+      const clonedNodes = Array.from(
+        editorJSStyleElement.childNodes
+      ).map((node) => node.cloneNode(true));
 
       clonedNodes.forEach((node) =>
-        editorjsStyle.parentNode?.insertBefore(node, editorjsStyle)
+        editorJSStyleElement.parentNode?.insertBefore(
+          node,
+          editorJSStyleElement
+        )
       );
-      editorjsStyle.remove();
+
+      editorJSStyleElement.remove();
 
       if (clonedNodes.length === 0) {
         return;
@@ -143,23 +151,28 @@ class EditorJSStyle implements InlineTool {
       range.setEndAfter(clonedNodes[clonedNodes.length - 1]);
 
       selection.addRange(range);
+      this.#actions.innerHTML = '';
+      this.#api.tooltip.hide();
     });
 
     this.#api.tooltip.onHover(deleteButton, 'Delete style', {
       placement: 'top',
     });
 
-    classInput.value = editorjsStyle.className;
+    classInput.value = editorJSStyleElement.className;
 
     classInput.addEventListener('input', () =>
-      editorjsStyle.setAttribute('class', classInput.value)
+      editorJSStyleElement.setAttribute('class', classInput.value)
     );
 
-    idInput.value = editorjsStyle.id;
+    idInput.value = editorJSStyleElement.id;
 
-    idInput.addEventListener('input', () => (editorjsStyle.id = idInput.value));
+    idInput.addEventListener(
+      'input',
+      () => (editorJSStyleElement.id = idInput.value)
+    );
 
-    styleTextarea.value = editorjsStyle.getAttribute('style') ?? '';
+    styleTextarea.value = editorJSStyleElement.getAttribute('style') ?? '';
 
     // To input line breaks
     styleTextarea.addEventListener('keydown', (event) =>
@@ -167,7 +180,7 @@ class EditorJSStyle implements InlineTool {
     );
 
     styleTextarea.addEventListener('input', () =>
-      editorjsStyle.setAttribute('style', styleTextarea.value)
+      editorJSStyleElement.setAttribute('style', styleTextarea.value)
     );
 
     return true;
@@ -198,17 +211,13 @@ class EditorJSStyle implements InlineTool {
   }
 
   surround(range: Range) {
-    const editorjsStyle = new EditorJSStyleElement();
+    const editorjsStyleElement = new EditorJSStyleElement();
 
-    editorjsStyle.append(
-      range.collapsed ? 'new style' : range.extractContents()
-    );
+    editorjsStyleElement.append(range.extractContents());
 
-    setTimeout(() => {
-      range.insertNode(editorjsStyle);
-      this.#api.selection.expandToTag(editorjsStyle);
-    });
+    range.insertNode(editorjsStyleElement);
+    this.#api.selection.expandToTag(editorjsStyleElement);
   }
 }
 
-export default EditorJSStyle;
+export { StyleInlineTool };

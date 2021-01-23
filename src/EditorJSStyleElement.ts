@@ -1,10 +1,3 @@
-class EditorJSStyleElement extends HTMLElement {
-  constructor() {
-    super();
+class EditorJSStyleElement extends HTMLElement {}
 
-    // To prevent Editor.js keydown event
-    this.addEventListener('keydown', (event) => event.stopPropagation());
-  }
-}
-
-export default EditorJSStyleElement;
+export { EditorJSStyleElement };

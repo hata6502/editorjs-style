@@ -3,47 +3,37 @@
   <head>
     <meta charset="utf-8" />
     <title>editorjs-style</title>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/editorjs-inspector@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/editorjs-style@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/paragraph@latest"></script>
   </head>
 
   <body>
     <div id="editorjs"></div>
     <button id="button" type="button">Save</button>
     <div id="output-data"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+
+    <!-- For demo -->
+    <script src="https://cdn.jsdelivr.net/npm/editorjs-style@latest"></script>
+    <!-- For developing -->
+    <!--<script src="../dist/index.js"></script>-->
+
     <script>
       const data = {
-        time: 1600015893556,
         blocks: [
           {
             type: 'paragraph',
             data: {
               text:
-                'editorjs-style <editorjs-style style="background-color: pink;">​demo​</editorjs-style>​<editorjs-style style="display: block;\nborder: 1px solid black;">​<editorjs-style style="float: left;\nwidth: 100px;\nbackground-color: pink;\nmargin-right: 1rem;">​​​floating content​​​​</editorjs-style>​Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.​</editorjs-style>',
+                'test <editorjs-style style="background-color: pink;">editorjs-style​​</editorjs-style> test',
             },
           },
         ],
-        version: '2.18.0',
       };
-
-      // To prevent breaking nested editorjs-style
-      class ParagraphForEditorJSStyle extends Paragraph {
-        static get enableLineBreaks() {
-          return true;
-        }
-      }
 
       const editorJS = new EditorJS({
         data,
         tools: {
-          editorJSInspector: EditorJSInspector,
-          editorJSStyle: EditorJSStyle,
-          paragraph: {
-            class: ParagraphForEditorJSStyle,
-            inlineToolbar: true,
-          },
+          style: EditorJSStyle.StyleInlineTool,
         },
       });
 

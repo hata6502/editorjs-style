@@ -1,3 +1,1 @@
-import EditorJSStyle from './EditorJSStyle';
-
-export default EditorJSStyle;
+export { StyleInlineTool } from './StyleInlineTool';
