@@ -23,7 +23,7 @@
     "webpack": "webpack"
   },
   "devDependencies": {
-    "@editorjs/editorjs": "^2.18.0",
+    "@editorjs/editorjs": "^2.19.1",
     "license-checker": "^25.0.1",
     "material-design-icons": "^3.0.1",
     "prettier": "^2.0.5",
