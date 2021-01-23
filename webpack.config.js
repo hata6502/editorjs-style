@@ -14,7 +14,6 @@ module.exports = {
   output: {
     filename: 'index.js',
     library: 'EditorJSStyle',
-    libraryExport: 'default',
     libraryTarget: 'umd',
   },
 };

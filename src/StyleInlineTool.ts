@@ -3,10 +3,10 @@ import type {
   InlineTool,
   InlineToolConstructorOptions,
 } from '@editorjs/editorjs';
-import EditorJSStyleElement from './EditorJSStyleElement';
-import EditorJSStyleError from './EditorJSStyleError';
+import { EditorJSStyleElement } from './EditorJSStyleElement';
+import { EditorJSStyleError } from './EditorJSStyleError';
 
-class EditorJSStyle implements InlineTool {
+class StyleInlineTool implements InlineTool {
   static get isInline() {
     return true;
   }
@@ -211,4 +211,4 @@ class EditorJSStyle implements InlineTool {
   }
 }
 
-export default EditorJSStyle;
+export { StyleInlineTool };

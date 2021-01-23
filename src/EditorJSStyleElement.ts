@@ -7,4 +7,4 @@ class EditorJSStyleElement extends HTMLElement {
   }
 }
 
-export default EditorJSStyleElement;
+export { EditorJSStyleElement };
