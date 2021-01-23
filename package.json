@@ -12,7 +12,7 @@
   ],
   "repository": "https://github.com/hata6502/editorjs-style",
   "license": "MIT",
-  "author": "hata6502",
+  "author": "Tomoyuki Hata <hato6502@gmail.com>",
   "main": "dist/index.js",
   "scripts": {
     "fix": "prettier --write .",
