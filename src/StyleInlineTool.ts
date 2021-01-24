@@ -151,6 +151,7 @@ class StyleInlineTool implements InlineTool {
       range.setEndAfter(clonedNodes[clonedNodes.length - 1]);
 
       selection.addRange(range);
+
       this.#actions.innerHTML = '';
       this.#api.tooltip.hide();
     });
