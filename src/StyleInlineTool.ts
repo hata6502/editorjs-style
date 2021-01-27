@@ -214,9 +214,7 @@ class StyleInlineTool implements InlineTool {
   surround(range: Range) {
     const editorjsStyleElement = new EditorJSStyleElement();
 
-    editorjsStyleElement.append(range.extractContents());
-
-    range.insertNode(editorjsStyleElement);
+    range.surroundContents(editorjsStyleElement);
     this.#api.selection.expandToTag(editorjsStyleElement);
   }
 }
