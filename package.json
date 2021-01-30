@@ -14,6 +14,9 @@
   "license": "MIT",
   "author": "Tomoyuki Hata <hato6502@gmail.com>",
   "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "fix": "prettier --write .",
     "generate-disclaimer": "yarn licenses generate-disclaimer --ignore-platform > DISCLAIMER.md",
