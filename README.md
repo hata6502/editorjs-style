@@ -83,7 +83,11 @@ This project is [MIT](https://github.com/hata6502/editorjs-style/blob/master/LIC
 
 ## Disclaimer
 
-Please see [DISCLAIMER.md](https://github.com/hata6502/editorjs-style/blob/master/DISCLAIMER.md).
+The following creations are included in this product:
+
+- [ionic-team/ionicons](https://github.com/ionic-team/ionicons/blob/master/LICENSE)
+
+Please see also [DISCLAIMER.md](https://github.com/hata6502/editorjs-style/blob/master/DISCLAIMER.md).
 
 ---
 
