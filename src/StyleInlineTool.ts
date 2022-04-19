@@ -48,9 +48,8 @@ class StyleInlineTool implements InlineTool {
   checkState() {
     this.#actions.innerHTML = '';
 
-    const editorJSStyleElement = this.#api.selection.findParentTag(
-      'EDITORJS-STYLE'
-    );
+    const editorJSStyleElement =
+      this.#api.selection.findParentTag('EDITORJS-STYLE');
 
     if (!editorJSStyleElement) {
       return false;
@@ -120,9 +119,9 @@ class StyleInlineTool implements InlineTool {
     }
 
     deleteButton.addEventListener('click', () => {
-      const clonedNodes = Array.from(
-        editorJSStyleElement.childNodes
-      ).map((node) => node.cloneNode(true));
+      const clonedNodes = Array.from(editorJSStyleElement.childNodes).map(
+        (node) => node.cloneNode(true)
+      );
 
       clonedNodes.forEach((node) =>
         editorJSStyleElement.parentNode?.insertBefore(
